@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>.:Proyecto:.</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/v2.1.1/dist/aframe-extras.loaders.min.js"></script>
+    
+    
+    <script src="https://cdn.rawgit.com/matthewbryancurtis/aframe-star-system-component/db4f1030/index.js"></script> 
+
+    
+  </head>  
+  <body>
+    <a-scene>
+      <a-assets>
+        <img id="galaxia" src="https://cdn.glitch.com/7ed88351-7826-4379-bfe4-bd8bb22e5446%2FGalaxy.jpg?1536088894212">    
+        <img id="plano" src="https://cdn.glitch.com/7ed88351-7826-4379-bfe4-bd8bb22e5446%2Fplano.jpg?1536089555180">
+        <img id="luna" src="https://cdn.glitch.com/7ed88351-7826-4379-bfe4-bd8bb22e5446%2Fluna.jpg?1536090859141">
+        <img id="luna_amarilla" src="https://cdn.glitch.com/7ed88351-7826-4379-bfe4-bd8bb22e5446%2Fluna_amarilla.jpg?1536091725294">
+        <a-asset-item id="myPlyModel" src="https://cdn.glitch.com/7ed88351-7826-4379-bfe4-bd8bb22e5446%2Fcan.ply?1536089633780"></a-asset-item>
+      </a-assets>
+      
+      <!--cielo-->
+      <a-sky color="#222"></a-sky>
+      <a-entity star-system></a-entity> 
+      
+      <!--plano-->
+      <a-plane src="#plano" rotation="-90 0 0" width="40" height="30" repeat="4 10"></a-plane>               
+      
+      <!--magicavoxel-->
+      <a-entity scale="0.5 0.5 0.5" ply-model="src: #myPlyModel" rotation="-90 0 0"></a-entity>
+      
+      <!--camara y cursor-->
+      <a-camera position="0 5 10">
+        <a-cursor>
+          animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+          
+        </a-cursor>
+      </a-camera>
+      
+      <!--esfera-->
+      <a-entity position="0 3 -2">
+        <a-sphere src="#luna" position="6 9 -7" scale="2 2 2" material="" geometry="" cambiartextura="to: #luna_amarilla" >
+          <a-animation attribute="rotation"
+               dur="10000"
+               fill="forwards"
+               to="0 -360 0"
+               repeat="indefinite">
+        </a-animation> 
+        </a-sphere>
+        <!-- texto.........--->
+      </a-entity>
+      <script>
+        AFRAME.registerComponent('cambiartextura',{
+          init: function (){
+            var data = this.data;
+            this.el.addEventListener('mouseenter', function()
+                                     {this.setAttribute('src', data.to);
+                                      
+                                     });
+          }
+          
+        });
+      </script>
+      
+      <a-entity scale="2 2 2" geometry="primitive:torusKnot" position="-10 6 -5" material="color:magenta;metalness:1;roughness:0.1;sphericalEnvMap:https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" rotation="">
+        <a-animation easing="linear" attribute="rotation" dur="10000" to="0 0 360" repeat="indefinite"></a-animation>
+      </a-entity>    
+      
+      
+     
+    </a-scene>
+  </body>
+</html>
